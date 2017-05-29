@@ -16,9 +16,13 @@ def get_birthdays(month):
         'IDToken1': config['lds']['username'],
         'IDToken2': config['lds']['password']
     })
-    results = r.json()
-
-    return results[0]['birthdays']
+    try:
+        results = r.json()
+    except ValueError as e:
+        s.get('https://www.lds.org/mls/mbr/?nb=true&lang=eng')
+        results = s.get(URL.format(month, 1)).json()
+    finally:
+        return results[0]['birthdays']
 
 
 def get_data(birthdays):
@@ -26,7 +30,7 @@ def get_data(birthdays):
         yield {
             'name': person['name'],
             'email': person['email'],
-            'age': person['age'],
+            'age': int(person['age']) + 1,
             'address': person['address'].replace("<br />", "\n"),
             'birthdate': {
                 'year': int(person['birthDate'][:4]),

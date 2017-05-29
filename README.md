@@ -9,7 +9,7 @@ Fill in calendar with appointments for calling people on their birthdays
 3. Install requirements `pip install -r requirements.txt`
 4. Generate `config.json` (see below)
 5. Generate `client_secret.json` (see [Google Quickstart](https://developers.google.com/google-apps/calendar/quickstart/python))
-6. Run using `birthday_filler` with a numeric month as the default parameter
+6. Run using `birthday_filler.py` with a numeric month as the default parameter
 
 
 ### config.json

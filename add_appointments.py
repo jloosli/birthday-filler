@@ -80,7 +80,7 @@ def add_event(title, event_start, description=None, calendarId='primary', durati
         "description": description
     }
     event = service.events().insert(calendarId=calendarId, body=body).execute()
-    print("Event created: {}".format(event.get('htmlLink')))
+    print("Event created: {} {}\n{}".format(event_start, title, event.get('htmlLink')))
 
 
 def main():

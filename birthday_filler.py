@@ -18,16 +18,26 @@ def get_args():
 
 def main():
     args = get_args()
+    current = datetime.now()
+    year = current.year
     if not args.month:
         month = 0
-        suggested = datetime.now().month
+        suggested_month = current.month
+        if current.day > 15:
+            suggested_month += 1
+            if suggested_month > 12:
+                suggested_month = 1
         while month < 1 or month > 12:
             try:
-                month = int(input("Which month should be run? [{}]:".format(suggested)))
+                month = int(input("Which month should be run? [{}]: ".format(suggested_month)))
             except ValueError:
+                if not month:
+                    month = suggested_month
                 pass
         args.month = month
     month_name = calendar.month_name[args.month]
+    if args.month == 1 and current.month == 12:
+        year += 1
     print("Gathering Birthdays for {}".format(month_name))
 
     with open(os.path.join(os.path.dirname(__file__), CONFIG_FILE)) as f:
@@ -35,7 +45,7 @@ def main():
 
     last = None
     diff = 5
-    start_hour = 17
+    start_hour = 18
     start_min = 0
 
     for b in get_birthdays.birthday_iter(args.month):
@@ -51,8 +61,8 @@ def main():
             last['minutes'] = start_min
 
         appointment = {
-            "title": "{} ({})".format(b['name'], b['age']),
-            "event_start": datetime(2017, last['month'], last['day'], last['hour'], last['minutes']),
+            "title": "{} ({})".format(b['name'], int(b['age']) + 1),
+            "event_start": datetime(year, last['month'], last['day'], last['hour'], last['minutes']),
             "description": "{name}\n{address}\nphone: {phone}\nemail: {email}".format(**b),
             "calendarId": config['google']['calendar_id']
         }
