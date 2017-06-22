@@ -37,7 +37,8 @@ def get_data(birthdays):
                 'month': int(person['birthDate'][4:6]),
                 'day': int(person['birthDate'][6:8])
             },
-            'phone': person['phone']
+            'phone': person['phone'],
+            'birthDateAge': person['birthDayAge']
         }
 
 

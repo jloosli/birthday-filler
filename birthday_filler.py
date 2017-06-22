@@ -61,7 +61,7 @@ def main():
             last['minutes'] = start_min
 
         appointment = {
-            "title": "{} ({})".format(b['name'], int(b['age']) + 1),
+            "title": "{name} ({birthDateAge})".format(**b),
             "event_start": datetime(year, last['month'], last['day'], last['hour'], last['minutes']),
             "description": "{name}\n{address}\nphone: {phone}\nemail: {email}".format(**b),
             "calendarId": config['google']['calendar_id']
